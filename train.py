@@ -5,12 +5,13 @@ import re
 from transformers import AutoTokenizer, AutoConfig,AutoModelForCausalLM
 from transformers import Trainer, TrainingArguments,DataCollatorForLanguageModeling
 import argparse
+import os
 
 
 BASE_GPT2_MODEL="flax-community/gpt-2-spanish"
 HUGGINGFACE_PATH_DATASET="jhonparra18/petro-tweets"
 N_TOKENS_CONTEXT = 128 #number of tokens for context to create next word
-
+os.environ['WANDB_PROJECT']="gpt2-text-generation"
 
 tokenizer=AutoTokenizer.from_pretrained(BASE_GPT2_MODEL)
 config = AutoConfig.from_pretrained(

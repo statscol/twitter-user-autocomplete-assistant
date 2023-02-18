@@ -46,9 +46,16 @@ python3 train.py -tr <YOUR_TRAIN_PARTITION> -e <NUMBER OF EPOCHS> -bs <BATCH_SIZ
 This will upload the model to HuggingFace Hub, if you want to disable just set the TrainingArguments.push_to_hub to `False`
 
 
+### Inference 
+
+An inference example can be found in inference.py, however check HuggingFace pipelines ([TextGenerationPipeline](https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.TextGenerationPipeline))
+
+```bash
+python3 inference.py
+```
 
 
 ## To-Do
-
+- HuggingFace Space (WIP)
 - Create a torch-lightning script (WIP)
 - Testing Encoder-Decoder Approach

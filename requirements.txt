@@ -73,6 +73,16 @@ numpy==1.24.2
     #   pandas
     #   pyarrow
     #   transformers
+nvidia-cublas-cu11==11.10.3.66
+    # via
+    #   nvidia-cudnn-cu11
+    #   torch
+nvidia-cuda-nvrtc-cu11==11.7.99
+    # via torch
+nvidia-cuda-runtime-cu11==11.7.99
+    # via torch
+nvidia-cudnn-cu11==8.5.0.96
+    # via torch
 packaging==23.0
     # via
     #   datasets
@@ -131,6 +141,8 @@ soupsieve==2.4
     # via beautifulsoup4
 tokenizers==0.13.2
     # via transformers
+torch==1.13.1
+    # via -r requirements.in
 tqdm==4.64.1
     # via
     #   datasets
@@ -141,6 +153,7 @@ transformers==4.26.1
 typing-extensions==4.5.0
     # via
     #   huggingface-hub
+    #   torch
     #   wandb
 urllib3==1.26.14
     # via
@@ -149,6 +162,10 @@ urllib3==1.26.14
     #   sentry-sdk
 wandb==0.13.10
     # via -r requirements.in
+wheel==0.38.4
+    # via
+    #   nvidia-cublas-cu11
+    #   nvidia-cuda-runtime-cu11
 xxhash==3.2.0
     # via datasets
 yarl==1.8.2

@@ -4,12 +4,13 @@ import pandas as pd
 import re
 from transformers import AutoTokenizer, AutoConfig,AutoModelForCausalLM
 from transformers import Trainer, TrainingArguments,DataCollatorForLanguageModeling
+from transformers import EarlyStoppingCallback
 import argparse
 import os
 
 
 BASE_GPT2_MODEL="flax-community/gpt-2-spanish"
-HUGGINGFACE_PATH_DATASET="jhonparra18/petro-tweets"
+HUGGINGFACE_PATH_DATASET="jhonparra18/petrogustavo-tweets"
 N_TOKENS_CONTEXT = 128 #number of tokens for context to create next word
 os.environ['WANDB_PROJECT']="gpt2-text-generation"
 
@@ -74,6 +75,7 @@ if __name__=="__main__":
     evaluation_strategy="steps",
     eval_steps=500,
     logging_steps=1000,
+    save_total_limit=5,
     gradient_accumulation_steps=2,
     num_train_epochs=30,
     weight_decay=0.1,
@@ -95,6 +97,7 @@ if __name__=="__main__":
         data_collator=data_collator,
         train_dataset=data_tokenized["train"],
         eval_dataset=data_tokenized["test"],
+        callbacks = [EarlyStoppingCallback(early_stopping_patience=5)]
     )
 
     trainer.train()

@@ -55,7 +55,10 @@ python3 inference.py
 ```
 
 
+### Demo
+
+See this HuggingFace [Space](https://huggingface.co/spaces/jhonparra18/ColombianPoliticianGPT2TextGeneration).
+
 ## To-Do
-- HuggingFace Space (WIP)
 - Create a torch-lightning script (WIP)
 - Testing Encoder-Decoder Approach

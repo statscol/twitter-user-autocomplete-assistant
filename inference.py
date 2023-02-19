@@ -16,7 +16,7 @@ tokenizer.pad_token = tokenizer.eos_token
 def text_completion(input_text:str,max_len:int=100):
 
   input_ids = tokenizer([input_text], return_tensors="pt",truncation=True,max_length=128)
-  outputs = model.generate(**input_ids, do_sample=True, max_length=max_len)
+  outputs = model.generate(**input_ids, do_sample=True, max_length=max_len,top_k=100,top_p=0.95)
   out_text = tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
   return out_text
 

@@ -12,6 +12,7 @@ import os
 BASE_GPT2_MODEL="flax-community/gpt-2-spanish"
 HUGGINGFACE_PATH_DATASET="jhonparra18/petrogustavo-tweets"
 N_TOKENS_CONTEXT = 128 #number of tokens for context to create next word
+TWEET_MIN_TOKEN_LENGTH=3
 os.environ['WANDB_PROJECT']="gpt2-text-generation"
 
 tokenizer=AutoTokenizer.from_pretrained(BASE_GPT2_MODEL)
@@ -57,8 +58,8 @@ if __name__=="__main__":
     ##make sure tweets have at least 3 tokens
     dataset=dataset.filter(lambda instance: instance['Tweet'] is not None)\
             .map(clean_text,batched=True).remove_columns(['Date','User','Tweet'])\
-            .filter(lambda instance: len(instance['text'].split(" "))>3)\
-            .shuffle(seed=444).train_test_split(test_size=0.1)
+            .filter(lambda instance: len(instance['text'].split(" "))>TWEET_MIN_TOKEN_LENGTH)\
+            .shuffle(seed=444).train_test_split(test_size=1-args.train_prop)
 
     data_tokenized = dataset.map(
         tokenize, batched=True,remove_columns="text")
@@ -71,8 +72,8 @@ if __name__=="__main__":
 
     args = TrainingArguments(
     output_dir=REPO_NAME,
-    per_device_train_batch_size=20,
-    per_device_eval_batch_size=20,
+    per_device_train_batch_size=args.batch_size,
+    per_device_eval_batch_size=args.batch_size,
     evaluation_strategy="steps",
     eval_steps=500,
     logging_steps=1000,
@@ -88,7 +89,7 @@ if __name__=="__main__":
     load_best_model_at_end=True,
     push_to_hub=True,
     report_to="wandb",
-    run_name=args['run_name']
+    run_name=args.run_name
     )
 
     trainer = Trainer(

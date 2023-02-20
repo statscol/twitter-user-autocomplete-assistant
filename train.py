@@ -55,7 +55,8 @@ if __name__=="__main__":
     dataset = load_dataset(HUGGINGFACE_PATH_DATASET,split="train") 
 
     ##make sure tweets have at least 3 tokens
-    dataset=dataset.map(clean_text,batched=True).remove_columns(['Date','User','Tweet'])\
+    dataset=dataset.filter(lambda instance: instance['Tweet'] is not None)\
+            .map(clean_text,batched=True).remove_columns(['Date','User','Tweet'])\
             .filter(lambda instance: len(instance['text'].split(" "))>3)\
             .shuffle(seed=444).train_test_split(test_size=0.1)
 
